@@ -57,7 +57,7 @@ if($fits_list eq ''){
         	}
         	push(@new, $ent);
 	}
-	system("cp /data/mta/www/mta_acis_gain/obsid_list /data/mta/www/mta_acis_gain/obsid_list~");
+	system("cp /data/mta/www/mta_acis_gain/Data/obsid_list /data/mta/www/mta_acis_gain/Data/obsid_list~");
 	open(OUT1, ">/data/mta/www/mta_acis_gain/obsid_list");
 	OUTER:
 	foreach $ent (@new){
