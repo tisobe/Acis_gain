@@ -1,0 +1,126 @@
+
+<HTML>
+<BODY TEXT="#FFFFFF" BGCOLOR="#000000" LINK="#00CCFF" VLINK="#B6FFFF" ALINK="#FF0000", background ="./stars.jpg">
+<script language="JavaScript">
+function MyWindowOpener(imgname) {
+msgWindow=open("","displayname","toolbar=no,directories=no,menubar=no,location=no,scrollbars=no,status=no ,width=900,height=850,resize=yes");
+msgWindow.document.close();
+msgWindow.document.write("<HTML><TITLE>ACIS Histgram:   "+imgname+"</TITLE>");
+msgWindow.document.write("<BODY BGCOLOR='white'>");
+msgWindow.document.write("<IMG SRC='/mta_days/mta_acis_gain/"+imgname+"' BORDER=0 WIDTH=800 HEIGHT=800><P></BODY></HTML>");
+msgWindow.focus();
+}
+</script>
+
+<title> ACIS Gain Plots </title>
+
+<CENTER><H2>ACIS Gain Plots</H2></CENTER><p>
+
+<P>
+ACIS gains were computed with following steps
+(see C. Grant memo:<a href='http://space.mit.edu/~cgrant/gain/index.html'>ACIS Gain @ -120 C</a> for more
+discussion ):
+<ul>
+<li> All ACIS calibration event 1 files were extracted from Achieve, except squeegee files.
+<li> Each data was compared with focal temperature, and only parts with focal temperature lower than 119.7 C
+     were extracted out.
+<li> From these data, only ccdy <= 20 (first 20 raw of a CCD) and grade 0, 2, 3, 4, and 6 were extracted.
+<li> A pulse height distribution was created from this data, and fit Lorentzian profiles to Al K-alpha (1486.7 eV),
+     Ti K-alpha (4510.84 eV), and Mn K-alpha (5898.75 eV) to find peak postions in ADU.
+<li> A straight line was fit between three peak position in ADU and eV, and a slope (Gain ADU/eV), and
+     an intercept (Offset ADU) were found.
+</ul>
+<p> For a gain plot, an x axis is in unit of year, and a y axis is in ADU/eV, the range for the y axis is 0.01 for
+     all the plots so that we can compare the general trend among the plots. Similarly for offset plots,
+     a y axis is in ADU, and the range for the y axis is 18 for all the plots. The slopes are either ADU/eV per year,
+     or ADU per year.
+<P>  Data entries are: Date, Obsid, starting time in seconds from 1998 Jan 1, end time in seconds from 1998 Jan 1,
+     Mn K-alpha position in ADU, Al K-alpha in ADU, Ti K-alpha in ADU, slopes (ADU/eV), errors for the slopes,
+     intercepts (ADU), and errors for the intercepts.
+</p>
+<CENTER>
+<table border = 2 cellpadding = 10 >
+<tr>
+        <th>CCD</th>
+	<th>Plots </th>
+	<th colspan=4>Data</th>
+	</tr><tr>
+	<th>&#160</th>
+	<th>&#160</th>
+        <th>Node 0</th>
+        <th>Node 1</th>
+        <th>Node 2</th>
+        <th>Node 3</th>
+</tr>
+<tr><th>CCD 0</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd0.gif')">CCD 0 Plot</a></td>
+<td><a href="./Data/ccd0_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd0_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd0_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd0_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 1</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd1.gif')">CCD 1 Plot</a></td>
+<td><a href="./Data/ccd1_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd1_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd1_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd1_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 2</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd2.gif')">CCD 2 Plot</a></td>
+<td><a href="./Data/ccd2_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd2_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd2_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd2_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 3</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd3.gif')">CCD 3 Plot</a></td>
+<td><a href="./Data/ccd3_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd3_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd3_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd3_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 4</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd4.gif')">CCD 4 Plot</a></td>
+<td><a href="./Data/ccd4_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd4_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd4_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd4_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 5</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd5.gif')">CCD 5 Plot</a></td>
+<td><a href="./Data/ccd5_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd5_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd5_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd5_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 6</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd6.gif')">CCD 6 Plot</a></td>
+<td><a href="./Data/ccd6_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd6_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd6_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd6_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 7</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd7.gif')">CCD 7 Plot</a></td>
+<td><a href="./Data/ccd7_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd7_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd7_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd7_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 8</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd8.gif')">CCD 8 Plot</a></td>
+<td><a href="./Data/ccd8_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd8_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd8_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd8_3">Node 3 Data</a></td>
+</tr>
+<tr><th>CCD 9</th>
+<td><a href="javascript:MyWindowOpener('./Plots/gain_plot_ccd9.gif')">CCD 9 Plot</a></td>
+<td><a href="./Data/ccd9_0">Node 0 Data</a></td>
+<td><a href="./Data/ccd9_1">Node 1 Data</a></td>
+<td><a href="./Data/ccd9_2">Node 2 Data</a></td>
+<td><a href="./Data/ccd9_3">Node 3 Data</a></td>
+</tr>
+</table>
+

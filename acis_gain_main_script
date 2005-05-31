@@ -1,0 +1,4 @@
+source /home/mta/.ascrc
+
+perl acis_gain_find_peak.perl
+perl acis_gain_plot_gain.perl

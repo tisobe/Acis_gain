@@ -1,0 +1,69 @@
+
+###################
+ACIS Gain Trending
+###################
+
+Purpose: Create trends of acis gain from three peaks (Al, M, Ti).
+
+Reference:
+http://space.mit.edu/~cgrant/gain/index.html
+
+
+Web site: http://asc.harvard.edu/mta_days/acis_gain.html
+
+
+------------------------
+acis_gain_find_peak.perl
+------------------------
+This script does:
+1. create a list of new obsids from cti data
+2. extract data from archieve
+3. extract data for CCDY <= 20, grade = 0, 2, 3, 4, 6.
+4. fit 3 peaks and find peak positions.
+5. fit a straight line, and find a gain and an offset.
+
+Input:
+	.hakama:		a password file (/data/mta4/MTA/bin)
+	.dare:			a user name file (/data/mta4/MTA/bin)
+	obsid_list:		a past obsid list (/data/mta/www/mta_acis_gain/Data/obsid_list
+	acisf*evt1.fits:	extracted acis evt 1 fits files
+
+Output:
+	/data/mta/www/mta_acis_gain/Data/ccd*_*
+		Entries: 	Obs Date
+				obsid
+				starting time in seconds from 1998 1.1
+				stop time in seconds from 1998 1.1
+				peak position of Mn K alpha
+				peak position of Al K alpha
+				peak position of ti K alpha
+				gain
+				error of gain
+				offset
+				error of offset.
+
+
+------------------------
+acis_gain_plot_gain.perl
+------------------------
+This script does:
+1. read data from /data/mta/www/mta_acis_gain/Data/ccd*_*
+2. plot gain trend 
+
+Input:
+	/data/mta/www/mta_acis_gain/Data/ccd*_* (see above)
+
+Output:
+	/data/mta/www/mta_acis_gain/Plots/gain_plot_ccd*.gif
+
+
+---------------------
+other scripts needed
+---------------------
+
+pnmflip
+ppmtogif
+         ------ these two codes are used to convert a ps file to a gif file.
+                located in /data/mta4/MTA/bin
+
+
