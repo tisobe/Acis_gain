@@ -1,4 +1,4 @@
 source /home/mta/.ascrc
 
-perl acis_gain_find_peak.perl
-perl acis_gain_plot_gain.perl
+perl  /data/mta4/MTA/bin/acis_gain_find_peak.perl
+perl  /data/mta4/MTA/bin/acis_gain_plot_gain.perl
