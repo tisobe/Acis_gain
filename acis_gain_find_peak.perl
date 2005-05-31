@@ -13,6 +13,12 @@
 $user   = `cat /data/mta4/MTA/data/.dare`;
 $hakama = `cat /data/mta4/MTA/data/.hakama`;
 
+$test = `ls -d `;
+if($test =~ /param/){
+}else{
+	system("mkdir param");
+}
+
 $fits_list  = $ARGV[0];
 chomp $fits_list;
 
