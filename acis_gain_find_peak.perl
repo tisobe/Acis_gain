@@ -83,6 +83,17 @@ if($fits_list eq ''){
 	close(FH);
 }
 
+open(IN, '/data/mta_www/mta_acis_gain/Data/keep_obsid');	#---- add back old obsid which was not
+while(<IN>){							#---- in archive at the last run
+	chomp $_;
+	push(@obsid_list, $_);
+}
+close(IN);
+system("rim /data/mta_www/mta_acis_gain/Data/keep_obsid");
+
+
+
+OUTER:
 foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 	open(OUT, ">./input_line");
 	print OUT "operation=retrieve\n";
@@ -96,10 +107,18 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 	
 	`echo $hakama |arc4gl -U$user -Sarcocc -iinput_line`;
 	system("rm input_line");
-	system("gzip -d *gz");
-	$zlist = `ls acisf*fits`;
-	@fits_entry = split(/\s+/, $zlist);	#--- there is a case which one obsid
-						#--- retrieve 2 or more files (e1, e2, etc)
+	$test = `ls `;					#--- check whether fits file is retrieved
+	if($test =~ /$obsid/){				#--- if not, keep the obsid in keep_obsid list
+		system("gzip -d *gz");			#--- so that the script check again the next time.
+		$zlist = `ls acisf*fits`;
+		@fits_entry = split(/\s+/, $zlist);	#--- there is a case which one obsid
+							#--- retrieve 2 or more files (e1, e2, etc)
+	}else{
+		open(OUT, '>>/data/mta_www/mta_acis_gain/Data/keep_obsid');
+		print OUT "$obsid\n";
+		close(OUT);
+		next OUTER;
+	}
 	$fchk = 0;
 	foreach $fits (@fits_entry){
 #
