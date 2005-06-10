@@ -105,7 +105,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 	print OUT "go\n";
 	close(OUT);
 	
-	`echo $hakama |arc4gl -U$user -Sarcocc -iinput_line`;
+	`echo $hakama |/home/ascds/DS.release/bin/arc4gl -U$user -Sarcocc -iinput_line`;
 	system("rm input_line");
 	$test = `ls `;					#--- check whether fits file is retrieved
 	if($test =~ /$obsid/){				#--- if not, keep the obsid in keep_obsid list
