@@ -240,18 +240,23 @@ sub plot_fig{
 
 sub convtime{
 	my($l_time);
-	($l_time) = @_;
-	$temp = `axTime3 $l_time u s t d`;
-	@ttemp = split(/:/, $temp);
-	$dev = 365;
-	$chk = 4.0 * int($ttemp[0]/4.0);
-	if($chk == $ttemp[0]){
-		$dev = 366;
-	}
-	$dev2 = 24.0 * $dev;
-	$hour = $ttemp[2] + $ttemp[3]/24 + $ttemp[4]/1440;
-	
-	$ytime = $ttemp[0] + $ttemp[1]/$dev + $hour/$dev2;
+        $t_day = $l_time/86400 + 1;
+        $ytime = 1998;
+        OUTER:
+        while($ytime< 3200){
+                $chk = 4.0 * int($ytime/4.0);
+                $y_day = 365;
+                if($chk == $ytime){
+                        $y_day = 366;
+                }
+                if($t_day >= $y_day){
+                        $t_day -= $y_day;
+                        $ytime++;
+                }else{
+                        $ytime += $t_day/$y_day;
+                        last OUTER;
+                }
+        }
 	return $ytime;
 }
 

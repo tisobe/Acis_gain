@@ -60,7 +60,7 @@ if($fits_list eq ''){
         	push(@new, $ent);
 	}
 	system("cp /data/mta/www/mta_acis_gain/Data/obsid_list /data/mta/www/mta_acis_gain/Data/obsid_list~");
-	open(OUT1, ">>/data/mta/www/mta_acis_gain/Data/obsid_list");
+	open(OUT1, ">/data/mta/www/mta_acis_gain/Data/obsid_list");
 	OUTER:
 	foreach $ent (@new){
         	print OUT1 "$ent\n";
@@ -89,7 +89,7 @@ while(<IN>){							#---- in archive at the last run
 	push(@obsid_list, $_);
 }
 close(IN);
-system("rim /data/mta_www/mta_acis_gain/Data/keep_obsid");
+system("rm /data/mta_www/mta_acis_gain/Data/keep_obsid");
 
 
 
