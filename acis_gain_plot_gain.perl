@@ -240,6 +240,7 @@ sub plot_fig{
 
 sub convtime{
 	my($l_time);
+	($l_time) = @_;
         $t_day = $l_time/86400 + 1;
         $ytime = 1998;
         OUTER:
