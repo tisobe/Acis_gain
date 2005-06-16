@@ -10,6 +10,8 @@
 #											#
 #########################################################################################
 
+$ftools = '/home/ascds/DS.release/otsbin/';
+
 $user   = `cat /data/mta4/MTA/data/.dare`;
 $hakama = `cat /data/mta4/MTA/data/.hakama`;
 chomp $user;
@@ -153,7 +155,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #
 #----- read observation data from the fits file header
 #
-			system("fdump infile=t_selected.fits outfile=Working_dir/ztemp_date col=- row=1 clobber=yes");
+			system("$ftools/fdump infile=t_selected.fits outfile=Working_dir/ztemp_date col=- row=1 clobber=yes");
 			open(FH, './Working_dir/ztemp_date');
 			OUTER3:
 			while(<FH>){
@@ -182,11 +184,11 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 				for($node_id = 0; $node_id < 4; $node_id++){
 					$line = 'out.fits[node_id='."$node_id".']';
 					system("dmcopy \"$line\" out1.fits");
-					system("fhisto infile=out1.fits outfile=out2.fits col=pha binsz=1 clobber=yes");
+					system("$ftools/fhisto infile=out1.fits outfile=out2.fits col=pha binsz=1 clobber=yes");
 #
 #---- extract pulse height location in ADU (X), counts (Y), and  count error (ERROR)
 #
-					system("fdump infile=out2.fits outfile=./Working_dir/pha col=X,Y,Error  row=1-1800 clobber=yes");
+					system("$ftools/fdump infile=out2.fits outfile=./Working_dir/pha col=X,Y,Error  row=1-1800 clobber=yes");
 					@xbin = ();
 					@ybin = ();
 					@yerr = ();
