@@ -897,6 +897,7 @@ sub find_time_range{
 			}
 		}
 	}
+	push(@cnt_list, $cnt -1);
 	
 #
 #### print out the results
