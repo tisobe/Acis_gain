@@ -2,3 +2,4 @@ source /home/mta/.ascrc
 
 perl  /data/mta4/MTA/bin/acis_gain_find_peak.perl
 perl  /data/mta4/MTA/bin/acis_gain_plot_gain.perl
+perl  /data/mta4/MTA/bin/acis_gain_print_html.perl
