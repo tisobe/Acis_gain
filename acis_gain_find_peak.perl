@@ -143,7 +143,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 			chomp $_;
 			@atemp = split(/\s+/, $_);
 
-                        open(OUT2, ">>"/data/mta/www/mta_acis_gain/gain_obs_list");
+                        open(OUT2, ">>/data/mta/www/mta_acis_gain/gain_obs_list");
                         print OUT2 "$tstart\t$obsid\t$atemp[4]\t$atemp[1]\n";
                         close(OUT2);
 
