@@ -178,6 +178,12 @@ foreach $ent (@data){
 	}
 	push(@new, $ent);
 }
+@temp = sort @new;
+open(OUT, '>/data/mta/www/mta_acis_gain/gain_obs_list');
+foreach $ent (@new){
+	print OUT "$ent\n";
+}
+close(OUT);
 
 open(OUT, '> /data/mta/www/mta_acis_gain/acis_gain_obs_list.html');
 
