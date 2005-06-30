@@ -10,7 +10,17 @@
 #											#
 #########################################################################################
 
-$ftools = '/home/ascds/DS.release/otsbin/';
+#
+#---- set several directory names
+#
+
+$ftools   = '/home/ascds/DS.release/otsbin/';
+$gain_out = '/data/mta/www/mta_acis_gain/';
+$cti_dir  = '/data/mta/Script/ACIS/CTI/Data/';
+
+#
+#--- password
+#
 
 $user   = `cat /data/mta4/MTA/data/.dare`;
 $hakama = `cat /data/mta4/MTA/data/.hakama`;
@@ -33,13 +43,13 @@ if($fits_list eq ''){
 #----- for the case, regular reading
 #
 	@old_list = ();
-	open(FH, '/data/mta/www/mta_acis_gain/Data/obsid_list');
+	open(FH, "$gain_out/Data/obsid_list");
 	while(<FH>){
         	chomp $_;
         	push(@old_list, $_);
 	}
 	
-	system('cat /data/mta/Script/ACIS/CTI/Data/Results/mn_ccd* > zall');
+	system("cat $cti_dir/Results/mn_ccd* > zall");
 	open(FH, 'zall');
 	@list = ();
 	while(<FH>){
@@ -61,8 +71,8 @@ if($fits_list eq ''){
         	}
         	push(@new, $ent);
 	}
-	system("cp /data/mta/www/mta_acis_gain/Data/obsid_list /data/mta/www/mta_acis_gain/Data/obsid_list~");
-	open(OUT1, ">/data/mta/www/mta_acis_gain/Data/obsid_list");
+	system("cp $gain_out/Data/obsid_list $gain_out/Data/obsid_list~");
+	open(OUT1, ">$gain_out/Data/obsid_list");
 	OUTER:
 	foreach $ent (@new){
         	print OUT1 "$ent\n";
@@ -85,13 +95,13 @@ if($fits_list eq ''){
 	close(FH);
 }
 
-open(IN, '/data/mta_www/mta_acis_gain/Data/keep_obsid');	#---- add back old obsid which was not
-while(<IN>){							#---- in archive at the last run
+open(IN, "$gain_out/Data/keep_obsid");			#---- add back old obsid which was not
+while(<IN>){						#---- in archive at the last run
 	chomp $_;
 	push(@obsid_list, $_);
 }
 close(IN);
-system("rm /data/mta_www/mta_acis_gain/Data/keep_obsid");
+system("rm $gain_out/Data/keep_obsid");
 
 
 
@@ -116,7 +126,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 		@fits_entry = split(/\s+/, $zlist);	#--- there is a case which one obsid
 							#--- retrieve 2 or more files (e1, e2, etc)
 	}else{
-		open(OUT, '>>/data/mta_www/mta_acis_gain/Data/keep_obsid');
+		open(OUT, ">>$gain_out/Data/keep_obsid");
 		print OUT "$obsid\n";
 		close(OUT);
 		next OUTER;
@@ -144,7 +154,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 			@atemp = split(/\s+/, $_);
 
 			if($atemp[4] =~ /\d/ && $atemp[1] =~ /\d/){ 
-                        	open(OUT2, ">>/data/mta/www/mta_acis_gain/gain_obs_list");
+                        	open(OUT2, ">>$gain_out/gain_obs_list");
                         	print OUT2 "$tstart\t$obsid\t$atemp[4]\t$atemp[1]\n";
                         	close(OUT2);
 			}
@@ -257,7 +267,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 					least_fit();
 				
 					$ccd_name = 'ccd'."$ccd".'_'."$node_id";
-					open(OUT, ">>/data/mta/www/mta_acis_gain/Data/$ccd_name");
+					open(OUT, ">>$gain_out/Data/$ccd_name");
 					print OUT  "$date\t$obsid\t$t_start\t$t_stop\t";
 					printf OUT  "%4.4f\t%4.4f\t%4.4f\t%4.4f\t%4.4f\t%4.4f\t%4.4f\n",$pos1,$pos2, $pos3,$slope, $sigm_slope, $int, $sigm_int;
 					close(OUT);

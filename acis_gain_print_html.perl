@@ -10,8 +10,14 @@
 #												#
 #################################################################################################
 
+#
+#---- set output directory
+#
 
-open(OUT, ">/data/mta/www/mta_acis_gain/acis_gain.html");
+$gain_out = '/data/mta/www/mta_acis_gain/';
+
+
+open(OUT, ">$gain_out/acis_gain.html");
 
 print OUT '<HTML>',"\n";
 print OUT '<BODY TEXT="#FFFFFF" BGCOLOR="#000000" LINK="#00CCFF" VLINK="yellow" ALINK="#FF0000", background ="./stars.jpg">',"\n";
@@ -160,7 +166,7 @@ print OUT "$line\n";
 
 
 @data = ();
-open(FH, "/data/mta/www/mta_acis_gain/gain_obs_list");
+open(FH, "$gain_out/gain_obs_list");
 while(<FH>){
 	chomp $_;
 	push(@data, $_);
@@ -179,13 +185,13 @@ foreach $ent (@data){
 	push(@new, $ent);
 }
 @temp = sort @new;
-open(OUT, '>/data/mta/www/mta_acis_gain/gain_obs_list');
+open(OUT, ">$gain_out/gain_obs_list");
 foreach $ent (@new){
 	print OUT "$ent\n";
 }
 close(OUT);
 
-open(OUT, '> /data/mta/www/mta_acis_gain/acis_gain_obs_list.html');
+open(OUT, "> $gain_out/acis_gain_obs_list.html");
 
 print OUT '<HTML>',"\n";
 print OUT '<BODY TEXT="#FFFFFF" BGCOLOR="#000000" LINK="#00CCFF" VLINK="yellow" ALINK="#FF0000", background
