@@ -37,7 +37,7 @@ print OUT 'discussion ):',"\n";
 print OUT '<ul>',"\n";
 print OUT '<li> All ACIS calibration event 1 files were extracted from Achieve, except squeegee files.',"\n";
 print OUT '<li> Each data was compared with focal temperature, and only parts with focal temperature lower than -119.7 C',"\n";
-print OUT '     were extracted out.',"\n";
+print OUT '     were extracted out. (See a list of data used:<a href="./acis_gain_obs_list.html">Input List</a>).',"\n";
 print OUT '<li> From these data, only ccdy <= 20 (first 20 raw of a CCD) and grade 0, 2, 3, 4, and 6 were extracted.',"\n";
 print OUT '<li> A pulse height distribution was created from this data, and fit Lorentzian profiles to Al K-alpha (1486.7 eV),',"\n";
 print OUT '     Ti K-alpha (4510.84 eV), and Mn K-alpha (5898.75 eV) to find peak postions in ADU.',"\n";
@@ -151,3 +151,72 @@ $month = $umon  + 1;
 $line = "<br><br><H3> Last Update: $month/$umday/$year</H3><br>";
 
 print OUT "$line\n";
+
+
+
+###########################################################
+# data list html page
+###########################################################
+
+
+@data = ();
+open(FH, "/data/mta/www/mta_acis_gain/gain_obs_list");
+while(<FH>){
+	chomp $_;
+	push(@data, $_);
+}
+close(FH);
+
+$first = shift(@data);
+@new = ("$first");
+OUTER:
+foreach $ent (@data){
+	foreach $comp (@new){
+		if($ent eq $comp){
+			next OUTER;
+		}
+	}
+	push(@new, $ent);
+}
+
+open(OUT, '> /data/mta/www/mta_acis_gain/acis_gain_obs_list.html');
+
+print OUT '<HTML>',"\n";
+print OUT '<BODY TEXT="#FFFFFF" BGCOLOR="#000000" LINK="#00CCFF" VLINK="yellow" ALINK="#FF0000", background
+="./stars.jpg">',"\n";
+print OUT '',"\n";
+print OUT '<title>ACIS Gain Input Data List </title>',"\n";
+print OUT '',"\n";
+print OUT '<CENTER><H2>ACIS Gain Input Data List</H2></CENTER><p>',"\n";
+print OUT '',"\n";
+print OUT '<P>',"\n";
+print OUT 'Data hilighted satisfies condtions (temp <= -119.7 C and integration time > 2000 sec) and is used to compute ACIS Gain.',"\n";
+print OUT '</P>',"\n";
+
+print OUT '<br>',"\n";
+print OUT '<center>',"\n";
+
+print OUT '<table border=0  cellspacing=6>',"\n";
+print OUT '<thead>',"\n";
+print OUT '<tr><th>Date</th><th>obsid</th><th>Int time (sec)</th><th>Focal Temp (C)</th></tr>',"\n";
+
+foreach $ent (@new){
+	print OUT '<tr>',"\n";
+	@atemp = split(/\s+/, $ent);
+	if($atemp[2] > 2000 && $atemp[3] <= -119.7){
+		print OUT "<td bgcolor='green' align=center>$atemp[0]</td>\n";
+		print OUT "<td bgcolor='green' align=center>$atemp[1]</td>\n";
+		print OUT "<td bgcolor='green' align=center>$atemp[2]</td>\n";
+		print OUT "<td bgcolor='green' align=center>$atemp[3]</td>\n";
+	}else{
+		print OUT "<td align=center>$atemp[0]</td>\n";
+		print OUT "<td align=center>$atemp[1]</td>\n";
+		print OUT "<td align=center>$atemp[2]</td>\n";
+		print OUT "<td align=center>$atemp[3]</td>\n";
+	}
+	print OUT '</tr>',"\n";
+}
+
+print OUT '</table>',"\n";
+print OUT '</center>',"\n";
+
