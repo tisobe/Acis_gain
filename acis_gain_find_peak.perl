@@ -169,7 +169,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #
 #----- extract data part with the condition described above
 #
-			system("dmcopy \"$line\" t_selected.fits");
+			system("dmcopy \"$line\" t_selected.fits clobber='yes'");
 #
 #----- read observation data from the fits file header
 #
@@ -195,13 +195,13 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #---- select out data potion with grade = 0, 2, 3, 4, 6 and firs 20 rows of CCD
 #
 				$line = 't_selected.fits[ccd_id='."$ccd".',chipy=1:20][grade=0,2,3,4,6]';
-				system("dmcopy \"$line\" out.fits");
+				system("dmcopy \"$line\" out.fits clobber='yes'");
 #
 #----- select out each node 
 #
 				for($node_id = 0; $node_id < 4; $node_id++){
 					$line = 'out.fits[node_id='."$node_id".']';
-					system("dmcopy \"$line\" out1.fits");
+					system("dmcopy \"$line\" out1.fits clobber='yes'");
 					system("$ftools/fhisto infile=out1.fits outfile=out2.fits col=pha binsz=1 clobber='yes'");
 #
 #---- extract pulse height location in ADU (X), counts (Y), and  count error (ERROR)
