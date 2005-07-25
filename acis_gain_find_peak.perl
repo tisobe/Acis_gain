@@ -16,7 +16,7 @@
 
 $ftools   = '/home/ascds/DS.release/otsbin/';
 $gain_out = '/data/mta/www/mta_acis_gain/';
-$cti_dir  = '/data/mta/Script/ACIS/CTI/Data/';
+$cti_dir  = '/data/mta_www/mta_temp/mta_cti/';
 
 #
 #--- password
