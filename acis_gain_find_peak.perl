@@ -173,7 +173,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #
 #----- read observation data from the fits file header
 #
-			system("$ftools/fdump infile=t_selected.fits outfile=Working_dir/ztemp_date col=- row=1 clobber=yes");
+			system("$ftools/fdump infile=t_selected.fits outfile=Working_dir/ztemp_date col=- row=1 clobber='yes'");
 			open(FH, './Working_dir/ztemp_date');
 			OUTER3:
 			while(<FH>){
@@ -202,11 +202,11 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 				for($node_id = 0; $node_id < 4; $node_id++){
 					$line = 'out.fits[node_id='."$node_id".']';
 					system("dmcopy \"$line\" out1.fits");
-					system("$ftools/fhisto infile=out1.fits outfile=out2.fits col=pha binsz=1 clobber=yes");
+					system("$ftools/fhisto infile=out1.fits outfile=out2.fits col=pha binsz=1 clobber='yes'");
 #
 #---- extract pulse height location in ADU (X), counts (Y), and  count error (ERROR)
 #
-					system("$ftools/fdump infile=out2.fits outfile=./Working_dir/pha col=X,Y,Error  row=1-1800 clobber=yes");
+					system("$ftools/fdump infile=out2.fits outfile=./Working_dir/pha col=X,Y,Error  row=1-1800 clobber='yes'");
 					@xbin = ();
 					@ybin = ();
 					@yerr = ();
@@ -620,7 +620,7 @@ sub find_temp_range{
 	@btemp = split(/acisf/,$fits);
 	@ctemp = split(/_/, $btemp[1]);
 	$msid = $ctemp[0];
-	system("/home/ascds/DS.release/otsbin/fdump $fits ./Working_dir/zdump - 1 clobber=yes");
+	system("/home/ascds/DS.release/otsbin/fdump $fits ./Working_dir/zdump - 1 clobber='yes'");
 	open(FH, './Working_dir/zdump');
 	OUTER:
 	while(<FH>){
@@ -682,7 +682,7 @@ sub find_temp_range{
 #
 #### find actual starting time and stop time of the data set
 #
-	system("/home/ascds/DS.release/otsbin/fstatistic $fits time - outfile=./Working_dir/zstat clobber=yes");
+	system("/home/ascds/DS.release/otsbin/fstatistic $fits time - outfile=./Working_dir/zstat clobber='yes'");
 	open(FH, './Working_dir/zstat');
 	while(<FH>){
 		chomp $_;
