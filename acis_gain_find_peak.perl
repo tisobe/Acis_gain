@@ -14,7 +14,6 @@
 #---- set several directory names
 #
 
-$ftools   = '/home/ascds/DS.release/otsbin/';
 $gain_out = '/data/mta/www/mta_acis_gain/';
 $cti_dir  = '/data/mta_www/mta_temp/mta_cti/';
 
@@ -173,14 +172,14 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #
 #----- read observation data from the fits file header
 #
-			system("$ftools/fdump infile=t_selected.fits outfile=Working_dir/ztemp_date col=- row=1 clobber='yes'");
+			system("dmlist infile=t_selected.fits outfile=Working_dir/ztemp_date opt=head");
 			open(FH, './Working_dir/ztemp_date');
 			OUTER3:
 			while(<FH>){
 				chomp $_;
 				if($_ =~ /DATE-OBS/){
-					@atemp = split(/\'/, $_);
-					$date  = $atemp[1];
+					@atemp = split(/\s+/, $_);
+					$date  = $atemp[2];
 					last OUTER3;
 				}
 			}
@@ -202,11 +201,13 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 				for($node_id = 0; $node_id < 4; $node_id++){
 					$line = 'out.fits[node_id='."$node_id".']';
 					system("dmcopy \"$line\" out1.fits clobber='yes'");
-					system("$ftools/fhisto infile=out1.fits outfile=out2.fits col=pha binsz=1 clobber='yes'");
+
+					system("dmextract "out1.fits[bin pha=1:4000:1]" outfile=out2.fits");
 #
 #---- extract pulse height location in ADU (X), counts (Y), and  count error (ERROR)
 #
-					system("$ftools/fdump infile=out2.fits outfile=./Working_dir/pha col=X,Y,Error  row=1-1800 clobber='yes'");
+					system("dmlist infile=out2.fits outfile=./Working_dir/pha opt=data");
+
 					@xbin = ();
 					@ybin = ();
 					@yerr = ();
@@ -220,11 +221,14 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 						if($atemp[1] !~ /\d/){
 							next OUTER;
 						}
-						push(@xbin, $atemp[2]);
-						push(@ybin, $atemp[3]);
-						push(@yerr, $atemp[4]);
+						push(@xbin, $atemp[3]);
+						push(@ybin, $atemp[4]);
+						push(@yerr, $atemp[5]);
 						$cnt++;
-						$sum += $atemp[3];
+						$sum += $atemp[4];
+						if($cnt > 1800){
+							last OUTER;
+						}
 					}
 					close(FH);
 					if($sum == 0){
