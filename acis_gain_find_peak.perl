@@ -14,15 +14,16 @@
 #---- set several directory names
 #
 
-$gain_out = '/data/mta/www/mta_acis_gain/';
-$cti_dir  = '/data/mta_www/mta_temp/mta_cti/';
+$gain_out   = '/data/mta/www/mta_acis_gain/';
+$cti_dir    = '/data/mta_www/mta_temp/mta_cti/';
+$focal_temp = '/data/mta/Script/Focal/Short_term/';
 
 #
 #--- password
 #
 
-$user   = `cat /data/mta4/MTA/data/.dare`;
-$hakama = `cat /data/mta4/MTA/data/.hakama`;
+$user   = `cat /data/mta/MTA/data/.dare`;
+$hakama = `cat /data/mta/MTA/data/.hakama`;
 chomp $user;
 chomp $hakama;
 
@@ -607,7 +608,7 @@ sub find_temp_range{
 
 	
 	system("rm ./Working_dir/*");
-	system("ls /data/mta/Script/Focal/Short_term > ./Working_dir/ztemp");	# get focal temp
+	system("ls $focal_temp > ./Working_dir/ztemp");	# get focal temp
 	@temp_list = ();
 	open(FH, './Working_dir/ztemp');
 	while(<FH>){
@@ -624,14 +625,15 @@ sub find_temp_range{
 	@btemp = split(/acisf/,$fits);
 	@ctemp = split(/_/, $btemp[1]);
 	$msid = $ctemp[0];
-	system("/home/ascds/DS.release/otsbin/fdump $fits ./Working_dir/zdump - 1 clobber='yes'");
+#$$##	system("/home/ascds/DS.release/otsbin/fdump $fits ./Working_dir/zdump - 1 clobber='yes'");
+	system("dmlist infile=$fits outfile= ./Working_dir/zdump opt=head");
 	open(FH, './Working_dir/zdump');
 	OUTER:
 	while(<FH>){
 		chomp $_;
 		if($_ =~ /DATE-OBS/i){
-			@atemp = split(/\'/,$_);
-			@btemp = split(/T/, $atemp[1]);
+			@atemp = split(/\s+/,$_);
+			@btemp = split(/T/, $atemp[2]);
 			@ctemp = split(/-/, $btemp[0]);
 			$tstart = $atemp[1];
 			$tstart =~ s/\s+//g;
@@ -654,8 +656,8 @@ sub find_temp_range{
 			conv_time_1998();
 			$st1998 = $t1998;
 		}elsif($_ =~ /DATE-END/i){
-			@atemp = split(/\'/,$_);
-			@btemp = split(/T/, $atemp[1]);
+			@atemp = split(/\s+/,$_);
+			@btemp = split(/T/, $atemp[2]);
 			@ctemp = split(/-/, $btemp[0]);
 			$tstop = $atemp[1];
 			$tstop =~ s/\s+//g;
@@ -686,18 +688,21 @@ sub find_temp_range{
 #
 #### find actual starting time and stop time of the data set
 #
-	system("/home/ascds/DS.release/otsbin/fstatistic $fits time - outfile=./Working_dir/zstat clobber='yes'");
+#$$##	system("/home/ascds/DS.release/otsbin/fstatistic $fits time - outfile=./Working_dir/zstat clobber='yes'");
+	$line = "$fits".'[cols time]';
+	system("dmstat infile=\"$line\" outilfe=./Working_dir/zstat centroid=no");
+
 	open(FH, './Working_dir/zstat');
 	while(<FH>){
 		chomp $_;
-		if($_ =~ /The minimum/){
-			@atemp = split(/is/,$_);
-			$begin = $atemp[1];
+		if($_ =~ /min/){
+			@atemp = split(/\s+/,$_);
+			$begin = $atemp[2];
 			$begin =~ s/\s+//g;
 		}
-		if($_ =~ /The maximum/){
-			@atemp = split(/is/,$_);
-			$end = $atemp[1];
+		if($_ =~ /max/){
+			@atemp = split(/\s+/,$_);
+			$end = $atemp[2];
 			$end =~ s/\s+//g;
 		}
 	}
@@ -747,7 +752,7 @@ sub find_temp_range{
 #
 #### put all time-focal temp info into one file
 #
-			system("cat /data/mta/Script/Focal/Short_term/$ent >> ./Working_dir/ztemp");
+			system("cat $focal_temp/$ent >> ./Working_dir/ztemp");
 		}
 	
 		$b_ind = 0;

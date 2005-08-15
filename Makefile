@@ -3,7 +3,7 @@
 ############################
 TASK = Acis_gain
 
-include /data/mta4/MTA/include/Makefile.MTA
+include /data/mta/MTA/include/Makefile.MTA
 
 BIN  = acis_gain_find_peak.perl acis_gain_plot_gain.perl acis_gain_main_script acis_gain_wrap_script acis_gain_print_html.perl
 DOC  = README
