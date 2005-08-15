@@ -200,9 +200,9 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #
 				for($node_id = 0; $node_id < 4; $node_id++){
 					$line = 'out.fits[node_id='."$node_id".']';
-					system("dmcopy \"$line\" out1.fits clobber='yes'");
+					system("dmcopy infile=\"$line\" outfile=out1.fits clobber='yes'");
 
-					system("dmextract \"out1.fits[bin pha=1:4000:1]\" outfile=out2.fits");
+					system("dmextract \"out1.fits[bin pha=1:4000:1]\" outfile=out2.fits clobber=yes");
 #
 #---- extract pulse height location in ADU (X), counts (Y), and  count error (ERROR)
 #
