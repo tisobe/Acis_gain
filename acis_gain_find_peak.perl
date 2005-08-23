@@ -626,7 +626,7 @@ sub find_temp_range{
 	@ctemp = split(/_/, $btemp[1]);
 	$msid = $ctemp[0];
 #$$##	system("/home/ascds/DS.release/otsbin/fdump $fits ./Working_dir/zdump - 1 clobber='yes'");
-	system("dmlist infile=$fits outfile= ./Working_dir/zdump opt=head");
+	system("dmlist infile=$fits outfile=./Working_dir/zdump opt=head");
 	open(FH, './Working_dir/zdump');
 	OUTER:
 	while(<FH>){
@@ -635,7 +635,7 @@ sub find_temp_range{
 			@atemp = split(/\s+/,$_);
 			@btemp = split(/T/, $atemp[2]);
 			@ctemp = split(/-/, $btemp[0]);
-			$tstart = $atemp[1];
+			$tstart = $atemp[2];
 			$tstart =~ s/\s+//g;
 			$syear = $ctemp[0];
 			$smon  = $ctemp[1];
@@ -659,7 +659,7 @@ sub find_temp_range{
 			@atemp = split(/\s+/,$_);
 			@btemp = split(/T/, $atemp[2]);
 			@ctemp = split(/-/, $btemp[0]);
-			$tstop = $atemp[1];
+			$tstop = $atemp[2];
 			$tstop =~ s/\s+//g;
 			$eyear = $ctemp[0];
 			$emon  = $ctemp[1];
@@ -690,7 +690,7 @@ sub find_temp_range{
 #
 #$$##	system("/home/ascds/DS.release/otsbin/fstatistic $fits time - outfile=./Working_dir/zstat clobber='yes'");
 	$line = "$fits".'[cols time]';
-	system("dmstat infile=\"$line\" outilfe=./Working_dir/zstat centroid=no");
+	system("dmstat infile=\"$line\" centroid=no > ./Working_dir/zstat");
 
 	open(FH, './Working_dir/zstat');
 	while(<FH>){

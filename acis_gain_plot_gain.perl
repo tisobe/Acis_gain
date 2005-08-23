@@ -17,6 +17,7 @@ use PGPLOT;
 #
 
 $gain_out = '/data/mta_www/mta_acis_gain/';
+$bin_dir  = '/data/mta/MTA/bin/';
 
 
 $dir = $ARGV[0];					#--- data file directory name
@@ -221,7 +222,7 @@ for($iccd = 0; $iccd < 10; $iccd++){
 #
 
 	$out_gif = 'gain_plot_ccd'."$iccd".'.gif';
-	system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|/data/mta4/MTA/bin/pnmcrop| /data/mta4/MTA/bin/pnmflip -r270 |/data/mta4/MTA/bin/ppmtogif > $gain_out/Plots/$out_gif");
+	system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|$bin_dir/pnmcrop| $bin_dir/pnmflip -r270 |$bin_dir/ppmtogif > $gain_out/Plots/$out_gif");
 #	system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|/data/mta4/MTA/bin/pnmcrop| /data/mta4/MTA/bin/pnmflip -r270 |/data/mta4/MTA/bin/ppmtogif > $out_gif");
 	
 	system("rm pgplot.ps");
