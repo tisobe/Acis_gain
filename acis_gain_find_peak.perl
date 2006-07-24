@@ -16,7 +16,7 @@
 
 $gain_out   = '/data/mta/www/mta_acis_gain/';
 $cti_dir    = '/data/mta_www/mta_temp/mta_cti/';
-$focal_temp = '/data/mta/Script/Focal/Short_term/';
+$focal_temp = '/data/mta/Script/ACIS/Focal/Short_term/';
 
 #
 #--- password
