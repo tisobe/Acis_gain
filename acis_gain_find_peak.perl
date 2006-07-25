@@ -148,7 +148,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 		OUTER4:
 		while(<IN>){
 #
-#------ use data only if the focal temp <= -119.7 C and integrationn time >= 2000 sec
+#------ use data only if the focal temp <= -119.0 C and integrationn time >= 2000 sec
 #
 			chomp $_;
 			@atemp = split(/\s+/, $_);
@@ -159,7 +159,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
                         	close(OUT2);
 			}
 
-			if($atemp[1] > -119.7 || $atemp[4] < 2000){
+			if($atemp[1] > -119.0 || $atemp[4] < 2000){
 				next OUTER4;
 			}
 
@@ -173,7 +173,9 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #
 #----- read observation data from the fits file header
 #
-			system("dmlist infile=t_selected.fits outfile=Working_dir/ztemp_date opt=head");
+
+			system("dmlist infile=\"$fits\" outfile='./Working_dir/ztemp_date' opt=head");
+
 			open(FH, './Working_dir/ztemp_date');
 			OUTER3:
 			while(<FH>){

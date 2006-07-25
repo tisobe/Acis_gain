@@ -43,6 +43,7 @@ print OUT 'discussion ):',"\n";
 print OUT '<ul>',"\n";
 print OUT '<li> All ACIS calibration event 1 files were extracted from Achieve, except squeegee files.',"\n";
 print OUT '<li> Each data was compared with focal temperature, and only parts with focal temperature lower than -119.7 C',"\n";
+print OUT '     before May 2006, and -119.0 C after May 2006, ',"\n";
 print OUT '     were extracted out. (See a list of data used:<a href="./acis_gain_obs_list.html">Input List</a>).',"\n";
 print OUT '<li> From these data, only ccdy <= 20 (first 20 raw of a CCD) and grade 0, 2, 3, 4, and 6 were extracted.',"\n";
 print OUT '<li> A pulse height distribution was created from this data, and fit Lorentzian profiles to Al K-alpha (1486.7 eV),',"\n";
