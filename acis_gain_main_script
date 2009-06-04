@@ -7,6 +7,6 @@ setenv PFILES "${PDIRS}:${SYSPFILES}"
 set path = (/home/ascds/DS.release/bin/  $path)
 
 
-perl  /data/mta/MTA/bin/acis_gain_find_peak.perl
-perl  /data/mta/MTA/bin/acis_gain_plot_gain.perl
-perl  /data/mta/MTA/bin/acis_gain_print_html.perl
+/opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_find_peak.perl
+/opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_plot_gain.perl
+/opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_print_html.perl
