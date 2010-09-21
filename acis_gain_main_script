@@ -1,10 +1,12 @@
 source /home/mta/.ascrc
 
+cd /data/mta/Script/ACIS/Gain/Exc
 rm -rf param
 mkdir param
 source /home/mta/bin/reset_param
-setenv PFILES "${PDIRS}:${SYSPFILES}"
+setenv PFILES "${PDIRS}"
 set path = (/home/ascds/DS.release/bin/  $path)
+set path = (/home/ascds/DS.release/ots/bin/ $path)
 
 
 /opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_find_peak.perl

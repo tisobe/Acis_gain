@@ -8,7 +8,7 @@ use PGPLOT;
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu				#	
 #										#
-#	last update: 05/31/05							#
+#	last update: 09/21/09							#
 #										#
 #################################################################################
 
@@ -111,14 +111,15 @@ for($iccd = 0; $iccd < 10; $iccd++){
 		$xmiddle = $temp[$cnt/2];
 		$ymiddle = $int + $slope * $xmiddle;
 
-		$ymin = $ymiddle - 0.005;
-		$ymax = $ymiddle + 0.005;
+		$ymin = $ymiddle - 0.008;
+		$ymax = $ymiddle + 0.008;
 
 		$ydiff = $ymax - $ymin;
 		$ybot  = $ymin - 0.15 * $ydiff;
 		$ymid  = $ymin + 0.5  * $ydiff;
 		$ytop  = $ymax + 0.02 * $ydiff;
 		$yin   = $ymax - 0.10 * $ydiff;
+		$yin2  = $ymax - 0.25 * $ydiff;
 
 		if($node == 0){
 			pgsvp(0.07, 0.51, 0.78, 0.98);
@@ -145,15 +146,56 @@ for($iccd = 0; $iccd < 10; $iccd++){
 		$total = $cnt;
 		$color = 2;
 		$symbol= 4;
+
 		plot_fig();
 	
-		$wslope = sprintf "%4.5f", $slope;
-		pgptxt($xin, $yin, 0.0, 0.0, "Gain (ADU/eV) Node $node   Slope: $wslope");
+		@x1 = ();
+		@y1 = ();
+		@x2 = ();
+		@y2 = ();
+		$cnt1 = 0;
+		$cnt2 = 0;
+		$boundary = 2006;
+		if($iccd == 5 || $iccd == 7){
+			$boundary = 2007;
+		}
+		for($k = 0; $k < $cnt; $k++){
+			if($tmid[$k] < $boundary){
+				push(@x1, $tmid[$k]);
+				push(@y1, $gain[$k]);
+				$cnt1++;
+			}else{
+				push(@x2, $tmid[$k]);
+				push(@y2, $gain[$k]);
+				$cnt2++;
+			}
+		}
+
+		@xdata = @x1;
+		@ydata = @y1;
+		$data_cnt = $cnt1;
+		robust_fit();
 	
 		$y_low = $int + $slope * $xmin;
-		$y_top = $int + $slope * $xmax;
+		$y_top = $int + $slope * $boundary;
 		pgmove($xmin, $y_low);
+		pgdraw($boundary, $y_top);
+
+		$wslope1 = sprintf "%4.5f", $slope;
+
+		@xdata = @x2;
+		@ydata = @y2;
+		$data_cnt = $cnt2;
+		robust_fit();
+	
+		$y_low = $int + $slope * $boundary;
+		$y_top = $int + $slope * $xmax;
+		pgmove($boundary,  $y_low);
 		pgdraw($xmax, $y_top);
+
+		$wslope2 = sprintf "%4.5f", $slope;
+		pgptxt($xin, $yin,  0.0, 0.0, "Gain (ADU/eV) Node $node");
+		pgptxt($xin, $yin2, 0.0, 0.0, "Slope: $wslope1/$wslope2");
 
 #
 #---- offset plot starts here
@@ -172,14 +214,25 @@ for($iccd = 0; $iccd < 10; $iccd++){
 		$xmiddle = $temp[$cnt/2];
 		$ymiddle = $int + $slope * $xmiddle;
 
-		$ymin = $ymiddle - 8;
-		$ymax = $ymiddle + 8;
+		$ymin = $ymiddle - 10;
+		$ymax = $ymiddle + 10;
+
+		if($iccd == 5){
+			$ymin = $ymiddle - 30;
+			$ymax = $ymiddle + 30;
+		}
+
+		if($iccd == 7){
+			$ymin = $ymiddle - 14;
+			$ymax = $ymiddle + 22;
+		}
 
 		$ydiff = $ymax - $ymin;
 		$ybot  = $ymin - 0.15 * $ydiff;
 		$ymid  = $ymin + 0.5  * $ydiff;
 		$ytop  = $ymax + 0.02 * $ydiff;
 		$yin   = $ymax - 0.10 * $ydiff;
+		$yin2  = $ymax - 0.25 * $ydiff;
 
 		if($node == 0){
 			pgsvp(0.56, 1.00, 0.78, 0.98);
@@ -207,13 +260,55 @@ for($iccd = 0; $iccd < 10; $iccd++){
 		$symbol= 4;
 		plot_fig();
 	
-		$wslope = sprintf "%4.5f", $slope;
-		pgptxt($xin, $yin, 0.0, 0.0, "Offset (ADU) Node $node   Slope: $wslope");
-		
+		@x1 = ();
+		@y1 = ();
+		@x2 = ();
+		@y2 = ();
+		$cnt1 = 0;
+		$cnt2 = 0;
+		$boundary = 2006;
+		if($iccd == 5 || $iccd == 7){
+			$boundary = 2007;
+		}
+		for($k = 0; $k < $cnt; $k++){
+			if($tmid[$k] < $boundary){
+				push(@x1, $tmid[$k]);
+				push(@y1, $offset[$k]);
+				$cnt1++;
+			}else{
+				push(@x2, $tmid[$k]);
+				push(@y2, $offset[$k]);
+				$cnt2++;
+			}
+		}
+
+		@xdata = @x1;
+		@ydata = @y1;
+		$data_cnt = $cnt1;
+		robust_fit();
+	
 		$y_low = $int + $slope * $xmin;
-		$y_top = $int + $slope * $xmax;
+		$y_top = $int + $slope * $boundary;
 		pgmove($xmin, $y_low);
+		pgdraw($boundary, $y_top);
+
+		$wslope1 = sprintf "%4.5f", $slope;
+
+		@xdata = @x2;
+		@ydata = @y2;
+		$data_cnt = $cnt2;
+		robust_fit();
+	
+		$y_low = $int + $slope * $boundary;
+		$y_top = $int + $slope * $xmax;
+		pgmove($boundary,  $y_low);
 		pgdraw($xmax, $y_top);
+		$wslope2 = sprintf "%4.5f", $slope;
+	
+		$wslope = sprintf "%4.5f", $slope;
+		pgptxt($xin, $yin,  0.0, 0.0, "Offset (ADU) Node $node");
+		pgptxt($xin, $yin2, 0.0, 0.0, "Slope: $wslope1/$wslope2");
+		
 	}	
 	pgclos();
 
@@ -222,7 +317,7 @@ for($iccd = 0; $iccd < 10; $iccd++){
 #
 
 	$out_gif = 'gain_plot_ccd'."$iccd".'.gif';
-	system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|$bin_dir/pnmcrop| $bin_dir/pnmflip -r270 |$bin_dir/ppmtogif > $gain_out/Plots/$out_gif");
+	system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|$bin_dir/pnmcrop| $bin_dir/pnmflip -r270 |$bin_dir/ppmtogif > $gain_out/Plots/$out_gif");
 #	system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|/data/mta4/MTA/bin/pnmcrop| /data/mta4/MTA/bin/pnmflip -r270 |/data/mta4/MTA/bin/ppmtogif > $out_gif");
 	
 	system("rm pgplot.ps");
@@ -276,24 +371,33 @@ sub convtime{
 sub robust_fit{
         $sumx = 0;
         $symy = 0;
+        $symy2 = 0;
+
         for($n = 0; $n < $data_cnt; $n++){
-                $sumx += $xdata[$n];
-                $symy += $ydata[$n];
+                $sumx  += $xdata[$n];
+                $symy  += $ydata[$n];
+                $symy2 += $ydata[$n] * $ydata[$n];
         }
         $xavg = $sumx/$data_cnt;
         $yavg = $sumy/$data_cnt;
+	$ysig = sqrt($symy2/$data_cnt - $yavg * $yavg);
 #
 #--- robust fit works better if the intercept is close to the
 #--- middle of the data cluster.
 #
         @xbin = ();
         @ybin = ();
+	$total = 0;
+	$ylow = $yavg - 3 * $ysig;
+	$ytop = $yavg + 3 * $ysig;
         for($n = 0; $n < $data_cnt; $n++){
-                $xbin[$n] = $xdata[$n] - $xavg;
-                $ybin[$n] = $ydata[$n] - $yavg;
+		if($ydata[$n] > $ylow && $ydata[$n] < $ytop){
+                	$xbin[$n] = $xdata[$n] - $xavg;
+                	$ybin[$n] = $ydata[$n] - $yavg;
+			$total++;
+		}
         }
 
-        $total = $data_cnt;
         medfit();
 
         $alpha += $beta * (-1.0 * $xavg) + $yavg;

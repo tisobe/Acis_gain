@@ -6,7 +6,7 @@
 #												#
 #	author: t. isobe (tiosbe@cfa.harvard.edu)						#
 #												#
-#	last update: Jun 29, 2005								#
+#	last update: Sep 21, 2010								#
 #												#
 #################################################################################################
 
@@ -54,7 +54,8 @@ print OUT '</ul>',"\n";
 print OUT '<p> For a gain plot, an x axis is in unit of year, and a y axis is in ADU/eV, the range for the y axis is 0.01 for',"\n";
 print OUT '     all the plots so that we can compare the general trend among the plots. Similarly for offset plots,',"\n";
 print OUT '     a y axis is in ADU, and the range for the y axis is 18 for all the plots. The slopes are either ADU/eV per year,',"\n";
-print OUT '     or ADU per year.',"\n";
+print OUT '     or ADU per year. Two slopes are fit on each data: before  year 2006 and after year 2006, except CCDs 5 and 7. ',"\n";
+print OUT '     For the latter, the boundary is set at year 2007.', "\n";
 print OUT '<P>  Data entries are: Date, Obsid, starting time in seconds from 1998 Jan 1, end time in seconds from 1998 Jan 1,',"\n";
 print OUT '     Mn K-alpha position in ADU, Al K-alpha in ADU, Ti K-alpha in ADU, slopes (ADU/eV), errors for the slopes,',"\n";
 print OUT '     intercepts (ADU), and errors for the intercepts.',"\n";
