@@ -12,3 +12,8 @@ set path = (/home/ascds/DS.release/ots/bin/ $path)
 /opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_find_peak.perl
 /opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_plot_gain.perl
 /opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_print_html.perl
+
+chgrp mtagroup /data/mta_www/mta_acis_gain/*
+chgrp mtagroup /data/mta_www/mta_acis_gain/Data/*
+chgrp mtagroup /data/mta_www/mta_acis_gain/Plot/*
+
