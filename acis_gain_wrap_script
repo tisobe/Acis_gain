@@ -1,1 +1,1 @@
-/bin/tcsh < /data/mta/MTA/bin/acis_gain_main_script
+/bin/tcsh < /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_main_script

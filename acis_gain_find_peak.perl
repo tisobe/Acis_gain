@@ -6,7 +6,7 @@
 #											#
 #	author: t. isobe (tisobe@cfa.harvard.edu)					#
 #											#
-#	last update: Aug 10, 2005							#
+#	last update: Jul 30, 2012							#
 #											#
 #########################################################################################
 
@@ -14,9 +14,14 @@
 #---- set several directory names
 #
 
-$gain_out   = '/data/mta/www/mta_acis_gain/';
-$cti_dir    = '/data/mta_www/mta_temp/mta_cti/';
-$focal_temp = '/data/mta/Script/ACIS/Focal/Short_term/';
+$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list';
+open(FH, $dir_list);
+while(<FH>){
+    chomp $_;
+    @atemp = split(/\s+/, $_);
+    ${$atemp[0]} = $atemp[1];
+}
+close(FH);
 
 #
 #--- password

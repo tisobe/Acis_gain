@@ -1,17 +1,21 @@
+setenv HEADAS /soft/lheasoft/headas/x86_64-pc-linux;
+source $HEADAS/headas-init.csh
+
 source /home/mta/.ascrc
 
-cd /data/mta/Script/ACIS/Gain/Exc
 rm -rf param
 mkdir param
+
 source /home/mta/bin/reset_param
+
 setenv PFILES "${PDIRS}"
 set path = (/home/ascds/DS.release/bin/  $path)
 set path = (/home/ascds/DS.release/ots/bin/ $path)
 
 
-/opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_find_peak.perl
-/opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_plot_gain.perl
-/opt/local/bin/perl  /data/mta/MTA/bin/acis_gain_print_html.perl
+/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_find_peak.perl
+/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_plot_gain.perl
+/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_print_html.perl
 
 chgrp mtagroup /data/mta_www/mta_acis_gain/*
 chgrp mtagroup /data/mta_www/mta_acis_gain/Data/*

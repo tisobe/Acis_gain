@@ -6,16 +6,21 @@
 #												#
 #	author: t. isobe (tiosbe@cfa.harvard.edu)						#
 #												#
-#	last update: Sep 21, 2010								#
+#	last update: Jul 30, 2012								#
 #												#
 #################################################################################################
 
 #
 #---- set output directory
 #
-
-$gain_out = '/data/mta/www/mta_acis_gain/';
-
+$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list';
+open(FH, $dir_list);
+while(<FH>){
+    chomp $_;
+    @atemp = split(/\s+/, $_);
+    ${$atemp[0]} = $atemp[1];
+}
+close(FH);
 
 open(OUT, ">$gain_out/acis_gain.html");
 
