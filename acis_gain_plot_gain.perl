@@ -8,14 +8,30 @@ use PGPLOT;
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu				#	
 #										#
-#	last update: Jul 30, 2012							#
+#	last update: Feb 25, 2013						#
 #										#
 #################################################################################
+
+OUTER:
+for($i = 0; $i < 10; $i++){
+	if($ARGV[$i] =~ /test/i){
+		$comp_test = 'test';
+		last OUTER;
+	}elsif($ARGV[$i] eq ''){
+		$comp_test = '';
+		last OUTER;
+	}
+}
 
 #
 #---- set output directory
 #
-$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list';
+if($comp_test =~ /test/i){
+	$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list_test';
+}else{
+	$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list';
+}
+	
 open(FH, $dir_list);
 while(<FH>){
     chomp $_;
@@ -24,12 +40,13 @@ while(<FH>){
 }
 close(FH);
 
+$dir = '';
+if($comp_test !~ /test/i){
+	$dir = $ARGV[0]; 				#--- data file directory name
+	chomp $dir;
+}
 
-
-$dir = $ARGV[0];					#--- data file directory name
-chomp $file;
-
-if($file eq ''){
+if($dir eq ''){
 	$dir = "$gain_out/Data";			#--- default data directory
 }
 

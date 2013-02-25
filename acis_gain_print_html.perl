@@ -6,17 +6,24 @@
 #												#
 #	author: t. isobe (tiosbe@cfa.harvard.edu)						#
 #												#
-#	last update: Oct 16, 2012								#
+#	last update: Feb 25, 2013								#
 #												#
 #################################################################################################
 #
 #---- html 5 conformed  Oct 16, 2012
 #
 
+$comp_test = $ARGV[0];
+chomp $comp_test;
+
 #
 #---- set output directory
 #
-$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list';
+if($comp_test =~ /test/i){
+	$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list_test';
+}else{
+	$dir_list = '/data/mta/Script/ACIS/Gain/house_keeping/dir_list';
+}
 open(FH, $dir_list);
 while(<FH>){
     chomp $_;
