@@ -1,5 +1,4 @@
-#!/usr/bin/perl 
-
+#!/usr/bin/env /usr/local/bin/perl
 
 #
 #---- set several directory names

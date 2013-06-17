@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env /usr/local/bin/perl
 use PGPLOT;
 
 #################################################################################
@@ -8,7 +8,7 @@ use PGPLOT;
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu				#	
 #										#
-#	last update: Feb 25, 2013						#
+#	last update: Apr 16, 2013						#
 #										#
 #################################################################################
 
@@ -340,9 +340,9 @@ for($iccd = 0; $iccd < 10; $iccd++){
 #
 
 	$out_gif = 'gain_plot_ccd'."$iccd".'.gif';
-	system("echo ''|$op_dir/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|$op_dir/pnmcrop| $op_dir/pnmflip -r270 |$op_dir/ppmtogif > $gain_out/Plots/$out_gif");
+	system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  ./pgplot.ps|pnmflip -r270 |ppmtogif > $gain_out/Plots/$out_gif");
 	
-	system("rm pgplot.ps");
+	system("rm  -rf pgplot.ps");
 }
 
 ########################################################

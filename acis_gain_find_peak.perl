@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env /usr/local/bin/perl
 
 #########################################################################################
 #											#
@@ -6,7 +6,7 @@
 #											#
 #	author: t. isobe (tisobe@cfa.harvard.edu)					#
 #											#
-#	last update: Feb 22, 2013							#
+#	last update: Arp 16, 2013							#
 #											#
 #########################################################################################
 
@@ -78,7 +78,7 @@ if($fits_list eq ''){
         	push(@list, $atemp[5]);
 	}
 	close(FH);
-	system("rm zall");
+	system("rm -rf  zall");
 	
 	$first = shift(@list);
 	@new = ($first);
@@ -121,7 +121,7 @@ while(<IN>){						#---- in archive at the last run
 	push(@obsid_list, $_);
 }
 close(IN);
-system("rm $gain_out/Data/keep_obsid");
+system("rm -rf  $gain_out/Data/keep_obsid");
 
 
 
@@ -137,8 +137,8 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 	print OUT "go\n";
 	close(OUT);
 	
-	`echo $hakama |/home/ascds/DS.release/bin/arc4gl -U$user -Sarcocc -iinput_line`;
-	system("rm input_line");
+	`echo $hakama |arc4gl -U$user -Sarcocc -iinput_line`;
+	system("rm -rf  input_line");
 	$test = `ls `;					#--- check whether fits file is retrieved
 	if($test =~ /$obsid/){				#--- if not, keep the obsid in keep_obsid list
 		system("gzip -d *gz");			#--- so that the script check again the next time.
@@ -206,7 +206,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 					last OUTER3;
 				}
 			}
-			system("rm ./Working_dir/ztemp_date");
+			system("rm -rf  ./Working_dir/ztemp_date");
 			
 #
 #---- loop around CCDs
@@ -264,7 +264,7 @@ foreach $obsid (@obsid_list){			#---- retrive fits file one at time
 #					}
 #					system("cp ./Working_dir/pha Outdir/$out_name");
 #					system("gzip -f  Outdir/$out_name");
-#					system("rm pha");
+#					system("rm -rf  pha");
 				
 					find_peaks();
 			
