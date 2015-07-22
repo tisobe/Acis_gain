@@ -1,17 +1,10 @@
-source /home/mta/.ascrc 
+cd /data/mta/Script/ACIS/Gain/Exc/
 
-rm -rf param
-mkdir param
-source /home/mta/bin/reset_param
+rm -rf /data/mta/Script/ACIS/Gain/Exc/param
+mkdir  /data/mta/Script/ACIS/Gain/Exc/param
 
-unsetenv PERLLIB
-unsetenv PERL5LIB
+setenv PYTHONPATH "/proj/sot/ska/arch/x86_64-linux_CentOS-5/lib/python2.7/site-packages"
 
-set path = (/home/ascds/DS.release/bin/  $path)
-set path = (/home/ascds/DS.release/ots/bin/ $path)
+/data/mta/Script/ACIS/Gain/Script/acis_gain_extract_data.py 
 
-/usr/local/bin/perl   /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_prep_test.perl 
-
-/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_find_peak.perl /data/mta/Script/ACIS/Gain/house_keeping/Test_prep/test_obid_list  test
-/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_plot_gain.perl test
-/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_print_html.perl test
+rm -rf Working_dir/*

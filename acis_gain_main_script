@@ -1,20 +1,12 @@
-source /home/mta/.ascrc
+cd /data/mta/Script/ACIS/Gain/Exc/
 
-rm -rf param
-mkdir param
-source /home/mta/bin/reset_param
+rm -rf /data/mta/Script/ACIS/Gain/Exc/param
+mkdir  /data/mta/Script/ACIS/Gain/Exc/param
 
-unsetenv PERLLIB
-unsetenv PERL5LIB
+source /proj/sot/ska/bin/ska_envs.csh
 
-set path = (/home/ascds/DS.release/bin/  $path)
-set path = (/home/ascds/DS.release/ots/bin/ $path)
 
-/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_find_peak.perl
-/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_plot_gain.perl
-/usr/local/bin/perl  /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_print_html.perl
-
-chgrp mtagroup /data/mta_www/mta_acis_gain/*
-chgrp mtagroup /data/mta_www/mta_acis_gain/Data/*
-chgrp mtagroup /data/mta_www/mta_acis_gain/Plot/*
+/data/mta/Script/ACIS/Gain/Script/acis_gain_extract_data.py    live
+/data/mta/Script/ACIS/Gain/Script/acis_gain_plot_trend.py
+/data/mta/Script/ACIS/Gain/Script/acis_gain_update_html.py
 

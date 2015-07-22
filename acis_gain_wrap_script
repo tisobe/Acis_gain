@@ -1,1 +1,1 @@
-ERM=dummy; export TERM; /bin/tcsh < /data/mta/Script/ACIS/Gain/Acis_gain/acis_gain_main_script
+TERM=dummy; export TERM; /bin/tcsh  < /data/mta/Script/ACIS/Gain/Script/acis_gain_main_script
