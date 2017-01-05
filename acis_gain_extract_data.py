@@ -6,7 +6,7 @@
 #                                                                                                   #
 #           author: t. isobe(tisobe@cfa.harvard.edu)                                                #
 #                                                                                                   #
-#           Last Update:    Oct 06, 2014                                                            #
+#           Last Update:    Jan 05, 2017                                                            #
 #                                                                                                   #
 #####################################################################################################
 
@@ -435,15 +435,17 @@ def extract_acis_evt1(obsid):
 
 
     cmd1 = "/usr/bin/env PERL5LIB="
-    cmd2 =  ' echo ' +  hakama + ' |/bin/nice -n15 arc4gl -U' + dare + ' -Sarcocc -i' + zspace
+#    cmd2 =  ' echo ' +  hakama + ' |/bin/nice -n15 arc4gl -U' + dare + ' -Sarcocc -i' + zspace
 #    cmd2 =  ' echo ' +  hakama + ' |arc4gl -U' + dare + ' -Sarcocc -i' + zspace
+    cmd2 = ' /proj/axaf/simul/bin/arc5gl -user isobe -script ' + zspace
     cmd  = cmd1 + cmd2
 
     try:
 #
-#--- run arc4gl
+#--- run arc4/5gl
 #
         bash(cmd,  env=ascdsenv)
+
         mcf.rm_file(zspace)
 #
 #--- check the data is actually extracted
